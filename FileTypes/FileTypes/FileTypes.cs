@@ -495,6 +495,8 @@ namespace FileTypes
 
     class Text : StandardFile
     {
+        //i dont know how im going to go about this one
+
         /*
         .doc and .docx - Microsoft Word file
         .odt - OpenOffice Writer document file
