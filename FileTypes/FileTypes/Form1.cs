@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Filetypes_Project
+namespace FileTypes
 {
     public partial class Form1 : Form
     {

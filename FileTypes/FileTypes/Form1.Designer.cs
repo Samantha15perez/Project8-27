@@ -1,4 +1,4 @@
-﻿namespace Filetypes_Project
+﻿namespace FileTypes
 {
     partial class Form1
     {

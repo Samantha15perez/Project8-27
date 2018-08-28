@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Filetypes_Project.Properties
+namespace FileTypes.Properties
 {
 
 
