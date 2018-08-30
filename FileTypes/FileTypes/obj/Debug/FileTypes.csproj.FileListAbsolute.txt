@@ -1,1 +1,14 @@
 C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\bin\Debug\FileTypes.exe.config
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\bin\Debug\FileTypes.exe
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\bin\Debug\FileTypes.pdb
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\bin\Debug\DotNetZip.dll
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\bin\Debug\policy.2.0.taglib-sharp.dll
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\bin\Debug\taglib-sharp.dll
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\bin\Debug\DotNetZip.xml
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\bin\Debug\policy.2.0.taglib-sharp.config
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\obj\Debug\FileTypes.csprojResolveAssemblyReference.cache
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\obj\Debug\FileTypes.Form1.resources
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\obj\Debug\FileTypes.Properties.Resources.resources
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\obj\Debug\FileTypes.csproj.GenerateResource.Cache
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\obj\Debug\FileTypes.exe
+C:\Users\Cyberadmin\Desktop\Project8-27\FileTypes\FileTypes\obj\Debug\FileTypes.pdb

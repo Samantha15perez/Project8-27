@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace FileTypes
 {
+
+
     class StandardFile
     {
         //fields
