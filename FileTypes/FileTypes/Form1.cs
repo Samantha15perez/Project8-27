@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace FileTypes
 {
@@ -18,6 +19,7 @@ namespace FileTypes
             InitializeComponent();
         }
 
+        public string type;
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -35,68 +37,123 @@ namespace FileTypes
             openFileDialog2.CheckPathExists = true;
             openFileDialog2.Multiselect = false;
             openFileDialog2.ShowDialog();
+            FileInfo info = new FileInfo(openFileDialog2.FileName);
+            FileAttributes attributes = info.Attributes;
+            
+
+
 
             if (openFileDialog2.FileName != null)
             {
                 try
                 {
-                    groupBox1.Text = openFileDialog2.FileName;
+                    
                     string FilePath = openFileDialog2.FileName;
+                    string[] DirectoryParts = FilePath.Split('\\');
+                    int i = (DirectoryParts.Count()) - 1;
+                    groupBox1.Text = DirectoryParts[i].ToString();
                     Icon PrevIcon = Icon.ExtractAssociatedIcon(FilePath);
                     pictureBox1.Image = PrevIcon.ToBitmap();
                     pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
+                    TagLib.File file = TagLib.File.Create(FilePath);
 
                     Regex rAudio = new Regex(".aif|.cda|.mid|.midi|.mp3|.mpa|.ogg|.wav|.wma|.wpl");
                     bool isAudio = rAudio.IsMatch(FilePath);
+                    type = "Audio";
 
                     Regex rCompressed = new Regex(".7z|.arj|.deb|.pkg|.rar|.rpm|.tar.gz|.z|.zip");
                     bool isCompressed = rCompressed.IsMatch(FilePath);
+                    type = "Compressed";
 
-                    Regex rDiskMedia = new Regex(".bin|.dmg|.iso|.toast|.vcd");
-                    bool isDiskMedia = rDiskMedia.IsMatch(FilePath);
+                    // Regex rDiskMedia = new Regex(".bin|.dmg|.iso|.toast|.vcd");
+                    // bool isDiskMedia = rDiskMedia.IsMatch(FilePath);
 
-                    Regex rDatabase = new Regex(".csv|.dat|.db|.dbf|.log|.mdb|.sav|.sql|.tar|.xml");
-                    bool isDatabase = rDatabase.IsMatch(FilePath);
+                    // Regex rDatabase = new Regex(".csv|.dat|.db|.dbf|.log|.mdb|.sav|.sql|.tar|.xml");
+                    // bool isDatabase = rDatabase.IsMatch(FilePath);
 
-                    Regex rExecutable = new Regex("apk|.bat|.bin|.cgi|.pl|.com|.exe|.gadget|.jar|.py|.wsf");
-                    bool isExecutable = rExecutable.IsMatch(FilePath);
+                    // Regex rExecutable = new Regex("apk|.bat|.bin|.cgi|.pl|.com|.exe|.gadget|.jar|.py|.wsf");
+                    // bool isExecutable = rExecutable.IsMatch(FilePath);
 
-                    Regex rFont = new Regex(".fnt|.fon|.otf|.otf|.ttf");
-                    bool isFont = rFont.IsMatch(FilePath);
+                    // Regex rFont = new Regex(".fnt|.fon|.otf|.otf|.ttf");
+                    // bool isFont = rFont.IsMatch(FilePath);
 
                     Regex rImage = new Regex(".ai|.bmp|.gif|.ico|.jpeg|.jpg|.png|.ps|.psd|.svg|.tif|.tiff|.sai");
                     bool isImage = rImage.IsMatch(FilePath);
+                    type = "Image";
 
-                    Regex rInternet = new Regex(".asp|.aspx|.cer|.cfm|.cgi|.pl|.css|.htm|.html|.js|.jsp|.part|.php|.py|.rss|.xhtml");
-                    bool isInternet = rInternet.IsMatch(FilePath);
+                    // Regex rInternet = new Regex(".asp|.aspx|.cer|.cfm|.cgi|.pl|.css|.htm|.html|.js|.jsp|.part|.php|.py|.rss|.xhtml");
+                    // bool isInternet = rInternet.IsMatch(FilePath);
 
-                    Regex rPresentation = new Regex(".key|.odp|.pps|.ppt|.pptx");
-                    bool isPresentation = rPresentation.IsMatch(FilePath);
+                    // Regex rPresentation = new Regex(".key|.odp|.pps|.ppt|.pptx");
+                    // bool isPresentation = rPresentation.IsMatch(FilePath);
 
-                    Regex rProgramming = new Regex(".c|.class|.cpp|.cs|.h|.java|.sh|.swift|.vb");
-                    bool isProgramming = rProgramming.IsMatch(FilePath);
+                    // Regex rProgramming = new Regex(".c|.class|.cpp|.cs|.h|.java|.sh|.swift|.vb");
+                    // bool isProgramming = rProgramming.IsMatch(FilePath);
 
-                    Regex rSpreadsheet = new Regex(".ods|.xlr|.xls|.xlsx");
-                    bool isSpreadsheet = rSpreadsheet.IsMatch(FilePath);
+                    // Regex rSpreadsheet = new Regex(".ods|.xlr|.xls|.xlsx");
+                    // bool isSpreadsheet = rSpreadsheet.IsMatch(FilePath);
 
-                    Regex rSystemFiles = new Regex(".bak|.cab|.cfg|.cpl|.cur|.dll|.dmp|.drv|.icns|.ico|.ini|.lnk|.msi|.sys|.tmp");
-                    bool isSystemFiles = rSystemFiles.IsMatch(FilePath);
+                    // Regex rSystemFiles = new Regex(".bak|.cab|.cfg|.cpl|.cur|.dll|.dmp|.drv|.icns|.ico|.ini|.lnk|.msi|.sys|.tmp");
+                    // bool isSystemFiles = rSystemFiles.IsMatch(FilePath);
 
                     Regex rVideo = new Regex(".3g2|.3gp|.avi|.flv|.h264|.m4v|.mkv|.mov|.mp4|.mpg|.mpeg|.rm|.swf|.vob|.wmv");
                     bool isVideo = rVideo.IsMatch(FilePath);
+                    type = "Video";
 
                     Regex rText = new Regex(".doc|.docx|.odt|.pdf|.rtf|.tex|.wks|.wps|.wpd");
                     bool isText = rText.IsMatch(FilePath);
+                    type = "Text";
 
 
                     if (openFileDialog2.FileName != "")
                     {
                         panelFile.Visible = true;
+                        labelFileName.Text = DirectoryParts[i].ToString();
+                        string size = new System.IO.FileInfo(FilePath).Length.ToString();
+
+                        if (int.Parse(size)  > 1000000)
+                        {
+                            size = (int.Parse(size) / 1000000).ToString() + " Megabytes";
+                        }
+                        else if (int.Parse(size) > 1000)
+                        {
+                            size = (int.Parse(size) / 1000).ToString() + " Kilobytes";
+                        }
+                        else
+                        {
+                            size = size + "Bytes";
+                        }
+
+
+                        if (new System.IO.FileInfo(FilePath).IsReadOnly == true)
+                        {
+                            labelRO.Text = "Yes";
+                        }else
+                        {
+                            labelRO.Text = "No";
+                        }
+                        labelFileType.Text = type;
+                        labelDateCreated.Text = info.CreationTime.ToString();
+                        labelFileSize.Text = size;
+
+
+                            
                     }
 
                     if (isAudio == true)
                     {
                         panelAudio.Visible = true;
+                        panelImage.Visible = false;
+                        panelVideo.Visible = false;
+                        labelMusicArtist.Text = file.Tag.FirstAlbumArtist;
+                        labelAlbumName.Text = file.Tag.Album;
+                        labelYear.Text = file.Tag.Year.ToString();
+                        double duration = (file.Properties.Duration.TotalSeconds / 60.6);
+                        //labelMusicLength.Text = file.Properties.
+                        labelBitrate.Text = (file.Properties.AudioBitrate.ToString()) + "bps";
+
+
+
                     }
 
                     else if (isCompressed == true)
@@ -104,50 +161,55 @@ namespace FileTypes
                         //panelCompressed.Visible = true;
                     }
 
-                    else if (isDiskMedia == true)
-                    {
-                        //panelDisk.Visible = true;
-                    }
+                    //else if (isDiskMedia == true)
+                    //{
+                    //    //panelDisk.Visible = true;
+                    //}
 
-                    else if (isDatabase == true)
-                    {
-                        //panelDatabase.Visible = true;
-                    }
+                    //else if (isDatabase == true)
+                    //{
+                    //    //panelDatabase.Visible = true;
+                    //}
 
-                    else if (isExecutable == true)
-                    {
-                        // panelExecutable.Visible = true;
-                    }
+                    //else if (isExecutable == true)
+                    //{
+                    //    // panelExecutable.Visible = true;
+                    //}
 
                     else if (isImage == true)
                     {
                         panelImage.Visible = true;
+                        panelAudio.Visible = false;
+                        labelImageLength.Text = file.Properties.PhotoHeight.ToString();
+                        labelImageWidth.Text = file.Properties.PhotoWidth.ToString(); 
+
+
                     }
 
-                    else if (isInternet == true)
-                    {
-                        // panelInternet.Visible = true;
-                    }
+                    //else if (isInternet == true)
+                    //{
+                    //    // panelInternet.Visible = true;
+                    //}
 
-                    else if (isPresentation == true)
-                    {
-                        //panelPresentation.Visible = true;
-                    }
+                    //else if (isPresentation == true)
+                    //{
+                    //    //panelPresentation.Visible = true;
+                    //}
 
-                    else if (isProgramming == true)
-                    {
-                        // panelProgramming.Visible = true;
-                    }
+                    //else if (isProgramming == true)
+                    //{
+                    //    // panelProgramming.Visible = true;
+                    //}
 
-                    else if (isSpreadsheet == true)
-                    {
-                        //panelSpreadsheet.Visible = true;
-                    }
+                    //else if (isSpreadsheet == true)
+                    //{
+                    //    //panelSpreadsheet.Visible = true;
+                    //}
 
-                    else if (isSystemFiles == true)
-                    {
-                        // panelSystemFiles.Visible = true;
-                    }
+                    //else if (isSystemFiles == true)
+                    //{
+                    //    // panelSystemFiles.Visible = true;
+                    //}
 
                     else if (isVideo == true)
                     {
@@ -183,6 +245,21 @@ namespace FileTypes
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelMusicArtist_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelMusicLength_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label24_Click(object sender, EventArgs e)
         {
 
         }
