@@ -47,8 +47,9 @@ namespace FileTypes
             {
                 try
                 {
-                    
                     string FilePath = openFileDialog2.FileName;
+                    StandardFile SelectedFile = new FileTypes.StandardFile(FilePath);
+                    
                     string[] DirectoryParts = FilePath.Split('\\');
                     int i = (DirectoryParts.Count()) - 1;
                     groupBox1.Text = DirectoryParts[i].ToString();
@@ -59,11 +60,11 @@ namespace FileTypes
 
                     Regex rAudio = new Regex(".aif|.cda|.mid|.midi|.mp3|.mpa|.ogg|.wav|.wma|.wpl");
                     bool isAudio = rAudio.IsMatch(FilePath);
-                    type = "Audio";
+                    
 
                     Regex rCompressed = new Regex(".7z|.arj|.deb|.pkg|.rar|.rpm|.tar.gz|.z|.zip");
                     bool isCompressed = rCompressed.IsMatch(FilePath);
-                    type = "Compressed";
+                    
 
                     // Regex rDiskMedia = new Regex(".bin|.dmg|.iso|.toast|.vcd");
                     // bool isDiskMedia = rDiskMedia.IsMatch(FilePath);
@@ -79,7 +80,7 @@ namespace FileTypes
 
                     Regex rImage = new Regex(".ai|.bmp|.gif|.ico|.jpeg|.jpg|.png|.ps|.psd|.svg|.tif|.tiff|.sai");
                     bool isImage = rImage.IsMatch(FilePath);
-                    type = "Image";
+                    
 
                     // Regex rInternet = new Regex(".asp|.aspx|.cer|.cfm|.cgi|.pl|.css|.htm|.html|.js|.jsp|.part|.php|.py|.rss|.xhtml");
                     // bool isInternet = rInternet.IsMatch(FilePath);
@@ -98,19 +99,20 @@ namespace FileTypes
 
                     Regex rVideo = new Regex(".3g2|.3gp|.avi|.flv|.h264|.m4v|.mkv|.mov|.mp4|.mpg|.mpeg|.rm|.swf|.vob|.wmv");
                     bool isVideo = rVideo.IsMatch(FilePath);
-                    type = "Video";
+                    
 
                     Regex rText = new Regex(".doc|.docx|.odt|.pdf|.rtf|.tex|.wks|.wps|.wpd");
                     bool isText = rText.IsMatch(FilePath);
-                    type = "Text";
+                    
 
 
                     if (openFileDialog2.FileName != "")
                     {
                         panelFile.Visible = true;
-                        labelFileName.Text = DirectoryParts[i].ToString();
-                        string size = new System.IO.FileInfo(FilePath).Length.ToString();
+                        labelFileName.Text = SelectedFile._name;
 
+                        string size = SelectedFile.Size.ToString();
+                        
                         if (int.Parse(size)  > 1000000)
                         {
                             size = (int.Parse(size) / 1000000).ToString() + " Megabytes";
@@ -124,15 +126,9 @@ namespace FileTypes
                             size = size + "Bytes";
                         }
 
-
-                        if (new System.IO.FileInfo(FilePath).IsReadOnly == true)
-                        {
-                            labelRO.Text = "Yes";
-                        }else
-                        {
-                            labelRO.Text = "No";
-                        }
-                        labelFileType.Text = type;
+                        labelRO.Text = SelectedFile.ReadOnly.ToString();
+                      
+                        
                         labelDateCreated.Text = info.CreationTime.ToString();
                         labelFileSize.Text = size;
 
@@ -149,9 +145,9 @@ namespace FileTypes
                         labelAlbumName.Text = file.Tag.Album;
                         labelYear.Text = file.Tag.Year.ToString();
                         double duration = (file.Properties.Duration.TotalSeconds / 60.6);
-                        //labelMusicLength.Text = file.Properties.
+                        labelMusicLength.Text = duration.ToString();
                         labelBitrate.Text = (file.Properties.AudioBitrate.ToString()) + "bps";
-
+                        labelFileType.Text = "Audio ( " + SelectedFile.Extension + " )";
 
 
                     }
@@ -178,10 +174,13 @@ namespace FileTypes
 
                     else if (isImage == true)
                     {
+                        labelFileType.Text = "Graphic ( " + SelectedFile.Extension + " )";
                         panelImage.Visible = true;
                         panelAudio.Visible = false;
                         labelImageLength.Text = file.Properties.PhotoHeight.ToString();
-                        labelImageWidth.Text = file.Properties.PhotoWidth.ToString(); 
+                        labelImageWidth.Text = file.Properties.PhotoWidth.ToString();
+                        labelWRES.Text = "";
+                        labelLRES.Text = "";
 
 
                     }
@@ -214,6 +213,7 @@ namespace FileTypes
                     else if (isVideo == true)
                     {
                         panelVideo.Visible = true;
+                        labelFileType.Text = "Video ( " + SelectedFile.Extension + " )";
                     }
 
                     else if (isText == true)

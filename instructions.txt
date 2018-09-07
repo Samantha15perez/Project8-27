@@ -1,0 +1,15 @@
+project should include a settings file to specify details at installation
+(i.e. which directory to use, what to do with files.. ect)
+
+
+
+program should begin at startup
+every time a new item is saved to the desktop it should
+{
+	find out the type of file
+	find specific details for each file type
+	find (or create) a location according to that file information
+	organize files together with similar types
+	determine whether or not the file is a copy
+	
+}

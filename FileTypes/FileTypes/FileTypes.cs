@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace FileTypes
 {
@@ -11,20 +12,40 @@ namespace FileTypes
     class StandardFile
     {
         //fields
+        private string _filepath;
+        private FileInfo _fileObjInfo;
         private int _size;
         private string _location;
         private bool _readOnly;
         private bool _hidden;
         private string _extension;
+        private string[] _ext;
+        public string _name;
+        private string[] _namesplit;
 
         //constructor
         public StandardFile()
         {
+            _filepath = "";
+            _name = "";
             _size = 0;
             _location = "";
             _readOnly = false;
             _hidden = false;
             _extension = "";
+        }
+
+        //filepath property
+        public StandardFile(string FilePath)
+        {
+            _filepath = FilePath;
+            _fileObjInfo = new FileInfo(FilePath);
+            _size = (int)_fileObjInfo.Length;
+            _location = FilePath;
+            _ext = FilePath.Split('.');
+            _extension = _ext[1];
+            _namesplit = FilePath.Split('\\');
+            _name = _namesplit[(_namesplit.Length - 1)].Replace(("." +_extension), "");
         }
 
         //size property
@@ -44,8 +65,8 @@ namespace FileTypes
         //readonly property
         public bool ReadOnly
         {
-            get { return _readOnly; }
-            set { _readOnly = value; }
+            get { return (_fileObjInfo != null) ? _fileObjInfo.Attributes.HasFlag(FileAttributes.ReadOnly) : false; }
+
         }
 
         //hidden property
@@ -65,6 +86,7 @@ namespace FileTypes
 
     class Audio : StandardFile
     {
+       
         //field
         private string _artist;
         private string _album;
